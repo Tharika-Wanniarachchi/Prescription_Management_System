@@ -8,7 +8,8 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>MediLink</title>
+    <link rel="icon" href="assets/images/logo.png" type="image/x-icon">
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
@@ -124,9 +125,9 @@ session_start();
                     <td><?php echo $row["dateTime"]; ?></td>
                     <td>
                         <select name="delivery_type" class="delivery_type btn btn-warning">
-                            <option value="Customer" >Deliverd</option>
-                            <option value="Pharmacy">Waiting</option>
-                            <option value="Pharmacy">Cancel</option>
+                            <option value="Waiting">Waiting</option>
+                            <option value="Deliverd">Deliverd</option>
+                            <option value="Cancel">Cancel</option>
                         </select>
                     </td>
                     <td>
