@@ -39,7 +39,9 @@ if (mysqli_num_rows($result_img) > 0) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="icon" href="assets/images/logo.png" type="image/x-icon">
 
+    
     <!-- Style CSS -->
     <link rel="stylesheet" href="./assets/css/style.css">
 
@@ -82,6 +84,13 @@ if (mysqli_num_rows($result_img) > 0) {
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        .error {
+            color: red;
+            font-size: 10px;
+            display:flex;
+            justify-content:flex-end;
         }
     </style>
 </head>
@@ -190,14 +199,17 @@ if (mysqli_num_rows($result_img) > 0) {
                              </div>
                             <div class="drug d-flex" style="display:flex; justify-content:flex-end">
                                 <label for="drugname" class="mx-3 mt-2">Drug</label>
-                                <input type="text" class="form-control" id="drugname" name="drugname" placeholder="Drug name" autocomplete="off" style="width: 200px;">
+                                <input type="text" class="form-control" id="drugname" name="drugname" placeholder="Drug name" autocomplete="off" style="width: 200px;" ><br>
                             </div>
+                            <div id="drugNameError" class="error"></div>
                             <div class="drug d-flex mt-3" style="display:flex; justify-content:flex-end">
                                 <label for="quantityPrice" class="mx-3 mt-2">Price Per Unit * Quantity</label>
-                                <input type="text" class="form-control" id="quantityPrice" name="quantityPrice" placeholder="e.g. 10.00 * 20" autocomplete="off" style="width: 200px;">
+                                <input type="text" class="form-control" id="quantityPrice" name="quantityPrice" placeholder="e.g. 10.00*20" autocomplete="off" style="width: 200px;" >
                             </div>
+                            <div id="drugQuantityPriceError" class="error"></div>
+
                             <div class="drug d-flex mt-3" style="display:flex; justify-content:flex-end">
-                                <button type="submit" name="submit" style="width: 100px;" class="btn btn-primary add_btn">Add</button>
+                                <button type="submit" id="addQuotation" name="submit" style="width: 100px;" class="btn btn-primary add_btn">Add</button>
                             </div>
                         </form>  
                          </div>
@@ -307,36 +319,65 @@ if (mysqli_num_rows($result_img) > 0) {
 
         
 <script>
+
     
 $(document).ready(function() {
-    
 
     $('#quotationForm').on('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+    event.preventDefault(); // Prevent the default form submission
 
-        var formData = new FormData(this);
+        if (validateForm()) { // Call the validation function
+            var formData = new FormData(this);
 
-        $.ajax({
-            url: $(this).attr('action'),
-            type: 'POST',
-            data: formData,
-            processData: false, // Do not process the data
-            contentType: false, // Do not set content type
-            success: function(response) {
-                // Handle the response from the server
-                //alert('Form submitted successfully!');
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false, // Do not process the data
+                contentType: false, // Do not set content type
+                success: function(response) {
+                    // Handle the response from the server
+                    //alert('Form submitted successfully!');
 
-               updatedDetails(); // Call the function to perform the second AJAX request
-
-               
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                // Handle any errors
-                alert('Error: ' + textStatus + ' - ' + errorThrown);
-                console.log(jqXHR.responseText);
-            }
-        });
+                    updatedDetails(); // Call the function to perform the second AJAX request
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // Handle any errors
+                    alert('Error: ' + textStatus + ' - ' + errorThrown);
+                    console.log(jqXHR.responseText);
+                }
+            });
+        } 
     });
+
+    // Function to validate form fields
+    function validateForm() {
+        var isValid = true;
+
+        // Reset any previous error messages
+        $('.error').text('');
+
+        // Validate drugname field
+        if ($('#drugname').val().trim() === '') {
+            $('#drugNameError').text('Please enter a drug name.');
+            isValid = false;
+        }
+
+        // Validate quantityPrice field
+        var quantityPrice = $('#quantityPrice').val().trim();
+                if (quantityPrice === '') {
+                    $('#drugQuantityPriceError').text('Please enter price per unit * quantity.');
+                    isValid = false;
+                } else {
+                    // Check if quantityPrice matches the format number.number*number
+                    var regex = /^\d+\.\d+\*\d+$/; // Regular expression for format like 10.00*20
+                    if (!regex.test(quantityPrice)) {
+                        $('#drugQuantityPriceError').text('Please enter the price per unit * quantity in the format like 10.00*20.');
+                        isValid = false;
+                    }
+                }
+        return isValid;
+    }
 
     function updatedDetails() {
         var pre_id = <?php echo $pre_id; ?>;
