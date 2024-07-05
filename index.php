@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>MediLink</title>
+    <link rel="icon" href="assets/images/logo.png" type="image/x-icon">
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -51,7 +52,7 @@
         }
 
         .sub_topic{
-            font-size:20px;
+            font-size:30px;
             font-weight: 500;
             color: #564b8f; 
         }
@@ -94,8 +95,9 @@
                     <img src="./assets/images/logo.png" alt="logo" width="200px">
                     <h1 class=" main">MediLink</h1>
                 </div>
-                <p class=" sub_topic mb-4">Experience the future of pharmacy management with MediLink. Our innovative platform allows you to upload your medical prescriptions effortlessly. We ensure that your prescriptions are accurately reviewed and promptly delivered to your doorstep. </p><br>
-                <button class="mt-6" id="getstart" onclick="showLoginForm()">Get Start <i class="fa-solid fa-circle-chevron-right"></i></button><br>
+                <!-- <p class=" sub_topic mb-4">Experience the future of pharmacy management with MediLink. Our innovative platform allows you to upload your medical prescriptions effortlessly. We ensure that your prescriptions are accurately reviewed and promptly delivered to your doorstep. </p><br> -->
+                <h3 class=" sub_topic mb-4">Do you want your loved ones to have their medicines delivered to their homes quickly?</h1>
+                <button class="mt-6" id="getstart" onclick="showLoginForm()">Register Now <i class="fa-solid fa-circle-chevron-right"></i></button><br>
             </div>
             <div class="col-md-4"></div>
         </div>
