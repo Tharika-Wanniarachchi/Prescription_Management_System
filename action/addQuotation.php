@@ -18,27 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Calculate Amount
     $amount =  $pricePerUnit*$quantity;
 
-    
-    // // Validation
-    // $errors = [];
-    // $fields = [
-    //     'drugname' => $drugname,
-    //     'quantityPrice' => $quantityPrice,
-    // ];
-
-    // if (empty($drugname)) {
-    //     $errors['add_msg1'] = "Drug name is required.";
-    // } 
-
-    // if (empty($quantityPrice)) {
-    //     $errors['add_msg2'] = "Price and Quantity is required.";
-    // }
-
-    // if (!empty($errors)) {
-    //     $query_string = http_build_query(array_merge($errors, $fields));
-    //     header("Location: ../pharmacyView.php?$query_string");
-    //     exit();
-    // }
 
     // Insert into database
     $sql = "INSERT INTO drugs (drug, Quantity, Amount, pre_id) VALUES ('$drugname', '$quantityPrice', '$amount', $pre_id)";
